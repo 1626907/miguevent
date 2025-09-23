@@ -1,2 +1,28 @@
 # miguevent
-自动解析咪咕赛事的php，需传递userid和对应token。示例https://migu.lifit.uk/migu.php?userId=%E4%BD%A0%E7%9A%84userId&amp;userToken=%E4%BD%A0%E7%9A%84userToken
+自动解析咪咕赛事的php，需传递userid和对应token。
+
+制作此php纯属是为了方便自己直接在电视上看赛事，不用反复切换投屏。
+在分享给群里爱好者时，群友指出有窃取他人token的可能，的确是我考虑不周。
+故而将此源码直接开源。
+
+此代码基于chatgpt生成
+特别感谢 @develop202 大佬提供的生成ddcalcu思路
+
+
+赛事订阅说明
+今日赛事：含解说 + 清流源
+明日赛事：赛事预告（次日自动更新）
+
+⚡️ 使用方法
+为避免封号等恶劣后果，使用者需将 你的userId、你的userToken 替换为个人信息。
+打开链接即可获取赛事清单 & 播放地址。
+无会员账号 ➝ 无法观看对应赛事。
+国内ip地址才能正常解析到播放链接。
+💡 小提示：移动用户可联系客服开通/领取会员。
+
+演示地址：https://migu.lifit.uk/migu.php?userId=你的userId&userToken=你的userToken
+
+以上仅供测试，不得用于违法违规用途~
+一切后果由使用者自行承担：）
+
+
