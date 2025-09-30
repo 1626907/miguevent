@@ -1,7 +1,6 @@
 <?php
 date_default_timezone_set('Asia/Shanghai');
 
-
 // ========== 用户信息（固定写死防泄露） ==========
 // 默认写死的会员信息
 $defaultUserId    = "你的userId";
@@ -11,6 +10,8 @@ $defaultUserToken = "你的userToken";
 $userId    = $_GET['userId'] ?? $defaultUserId;
 $userToken = $_GET['userToken'] ?? $defaultUserToken;
 
+
+$id        = $_GET['id'] ?? null;
 
 // ========== 缓存配置 ==========
 $cacheFile = __DIR__ . "/miguevent_id.txt";
@@ -87,7 +88,11 @@ if ($id === null) {
         if (preg_match('/^\[(.+?)\]\s*(.+),\s*(.+)$/u', $line, $m)) {
             $title    = "[" . $m[1] . "] " . $m[2];
             $fileName = trim($m[3]);
-            echo "{$title},{$baseUrl}?id={$fileName}\n";
+			if (isset($_GET['userId'], $_GET['userToken']) && $_GET['userId'] && $_GET['userToken']) {
+				echo "{$title},{$baseUrl}?id={$fileName}&userId=" . urlencode($_GET['userId']) . "&userToken=" . urlencode($_GET['userToken']) . "\n";
+			} else {
+				echo "{$title},{$baseUrl}?id={$fileName}\n";
+			}
         }
     }
     exit;
@@ -153,11 +158,13 @@ function generateDdCalcu_www($userid, $programId, $puData, $channelId, $timestam
 // ========== 获取原始播放地址 ==========
 $result = fetchPlayUrl($id, $userId, $userToken);
 $rawUrl = $result['body']['urlInfo']['url'] ?? '';
+
 if ($rawUrl == null){
    //echo "302 Redirect, but no Location found.";
    header("Location: https://cdn.jsdelivr.net/gh/feiyang666999/testvideo/sdr1080pvideo/playlist.m3u8");
    exit;
 }
+
 function getQueryParams($url) {
     $query = parse_url($url, PHP_URL_QUERY);
     $result = [];
