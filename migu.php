@@ -153,7 +153,11 @@ function generateDdCalcu_www($userid, $programId, $puData, $channelId, $timestam
 // ========== 获取原始播放地址 ==========
 $result = fetchPlayUrl($id, $userId, $userToken);
 $rawUrl = $result['body']['urlInfo']['url'] ?? '';
-
+if ($rawUrl == null){
+   //echo "302 Redirect, but no Location found.";
+   header("Location: https://cdn.jsdelivr.net/gh/feiyang666999/testvideo/sdr1080pvideo/playlist.m3u8");
+   exit;
+}
 function getQueryParams($url) {
     $query = parse_url($url, PHP_URL_QUERY);
     $result = [];
