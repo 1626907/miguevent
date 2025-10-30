@@ -159,6 +159,24 @@ function generateDdCalcu_www($userid, $programId, $puData, $channelId, $timestam
 $result = fetchPlayUrl($id, $userId, $userToken);
 $rawUrl = $result['body']['urlInfo']['url'] ?? '';
 
+$result_code = $result['code'];
+
+// 处理特定的错误码进行重定向
+switch ($result_code) {
+	case 200:
+        // 200状态码处理正常，不需要重定向，继续后续逻辑
+        break;
+    case 412:
+        header("Location: https://migu.lifit.uk/hyqx.mp4");
+        exit;
+    case 409:
+        header("Location: https://migu.lifit.uk/dlsx.mp4");
+        exit;    
+    default:
+        header("Location: https://migu.lifit.uk/qtcw.mp4");
+        exit;
+}
+
 if ($rawUrl == null){
    //echo "302 Redirect, but no Location found.";
    header("Location: https://cdn.jsdelivr.net/gh/feiyang666999/testvideo/sdr1080pvideo/playlist.m3u8");
