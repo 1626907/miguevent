@@ -151,7 +151,7 @@ if ($id === null) {
     $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https" : "http";
     $host   = $_SERVER['HTTP_HOST'] ?? 'localhost';
     $script = $_SERVER['SCRIPT_NAME'] ?? '';
-    $baseUrl = "https://migu.lifit.uk/migu.php"; //"$scheme://$host$script";
+    $baseUrl = "$scheme://$host$script";
 
     // 读取缓存文件并输出
     if (file_exists($cacheFile)) {
