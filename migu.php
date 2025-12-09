@@ -1,5 +1,10 @@
 <?php
+error_reporting(0);
+ini_set('display_errors', '0');
+ini_set('log_errors', '0'); // 如果不想记录到日志也关闭
+
 date_default_timezone_set('Asia/Shanghai');
+header('Content-Type: text/plain; charset=utf-8');
 
 // ========== 用户信息（固定写死防泄露） ==========
 // 默认写死的会员信息
@@ -127,22 +132,22 @@ function generateDdCalcu_www($userid, $programId, $puData, $channelId, $timestam
     $result .= $puData[$len-1].$puData[0];
     $result .= $puData[$len-2].$puData[1];
 
-    switch ($userid[1] ?? '0') {
+    switch ($userid[4] ?? '0') {
         case '0': case '1': case '8': case '9': $result .= "a"; break;
         case '2': case '3': $result .= "b"; break;
-        case '4': case '5': $result .= "c"; break;
-        case '6': case '7': $result .= "d"; break;
+        case '4': case '5': $result .= "a"; break;
+        case '6': case '7': $result .= "b"; break;
     }
 
     $result .= $puData[$len-3].($puData[2] ?? '0');
-    $result .= (substr($timestamp,0,1) == '2') ? 'b' : 'a';
+    $result .= (substr($timestamp,0,1) == '2') ? 'a' : 'b';
     $result .= $puData[$len-4].($puData[3] ?? '0');
 
-    switch ($programId[5] ?? '0') {
+    switch ($programId[1] ?? '0') {
         case '0': case '1': case '8': case '9': $result .= "a"; break;
         case '2': case '3': $result .= "b"; break;
-        case '4': case '5': $result .= "c"; break;
-        case '6': case '7': $result .= "d"; break;
+        case '4': case '5': $result .= "a"; break;
+        case '6': case '7': $result .= "b"; break;
     }
 
     $result .= $puData[$len-5].($puData[4] ?? '0');
@@ -157,6 +162,8 @@ function generateDdCalcu_www($userid, $programId, $puData, $channelId, $timestam
 
 // ========== 获取原始播放地址 ==========
 $result = fetchPlayUrl($id, $userId, $userToken);
+//echo json_encode($result);
+
 $rawUrl = $result['body']['urlInfo']['url'] ?? '';
 
 $result_code = $result['code'];
@@ -203,7 +210,7 @@ $channelId = $params['Channel_ID'] ?? '';
 $timestamp = $params['timestamp'] ?? '';
 
 $ddCalcu = generateDdCalcu_www($userid, $programId, $puData, $channelId, $timestamp);
-$finalUrl = $rawUrl . "&ddCalcu=" . urlencode($ddCalcu) . "_s002&sv=10010&crossdomain=www";
+$finalUrl = $rawUrl . "&ddCalcu=" . urlencode($ddCalcu) . "_s002&sv=10011&crossdomain=www";
 
 // ========== 日志记录 ==========
 $time = date('Y-m-d H:i:s');
